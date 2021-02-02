@@ -21,6 +21,6 @@ namespace CourseManagement.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EnrollmentDate { get; set; }
 
-        public virtual IEnumerable<Enrollment> Enrollments { get; set; }
+        public virtual ICollection<Enrollment> Enrollments { get; set; }
     }
 }

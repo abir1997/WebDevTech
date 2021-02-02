@@ -10,13 +10,20 @@ namespace CourseManagement.Models
     {
         public int DepartmentID { get; set; }
 
-        [StringLength(50 ,MinimumLength =7)]
+        [StringLength(50, MinimumLength =7)]
         public string Name { get; set; }
+
+        [DataType(DataType.Currency)]
         public decimal Budget { get; set; }
 
+        [DataType(DataType.Date)]
+        [Display(Name = "Hire Date")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
-        public int InstructorID { get; set; }
 
-        public virtual IEnumerable<Course> Courses { get; set; }
+        public int InstructorID { get; set; }
+        public virtual Instructor Instructor { get; set; }
+
+        public virtual ICollection<Course> Courses { get; set; }
     }
 }
