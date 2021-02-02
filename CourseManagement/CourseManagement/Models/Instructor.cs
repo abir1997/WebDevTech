@@ -8,10 +8,10 @@ namespace CourseManagement.Models
     {
         public int ID { get; set; }
 
-        [Required]
+        [Required, StringLength(50)]
         public string LastName { get; set; }
 
-        [Required]
+        [Required, StringLength(50)]
         public string FirstMidName { get; set; }
 
         [DataType(DataType.Date)]
