@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CourseManagement.Models
+﻿namespace CourseManagement.Models
 {
     public enum Grade
     {
@@ -22,7 +17,6 @@ namespace CourseManagement.Models
         public virtual Student Student { get; set; }
         public int CourseID { get; set; }
         public virtual Course Course { get; set; }
-
         public Grade? Grade { get; set; }
     }
 }

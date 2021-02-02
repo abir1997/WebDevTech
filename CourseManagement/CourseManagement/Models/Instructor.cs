@@ -16,11 +16,11 @@ namespace CourseManagement.Models
 
         [DataType(DataType.Date)]
         [Display(Name = "Hire Date")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
         public DateTime HireDate { get; set; }
 
         public virtual ICollection<CourseAssignment> CourseAssignments { get; set; }
 
-        public OfficeAssignment OfficeAssignment { get; set; }
+        public virtual OfficeAssignment OfficeAssignment { get; set; }
     }
 }
