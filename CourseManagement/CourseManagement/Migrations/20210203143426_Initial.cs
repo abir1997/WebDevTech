@@ -118,8 +118,7 @@ namespace CourseManagement.Migrations
                         name: "FK_CourseAssignments_Instructors_InstructorID",
                         column: x => x.InstructorID,
                         principalTable: "Instructors",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateTable(

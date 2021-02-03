@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseManagement.Migrations
 {
     [DbContext(typeof(AzureContext))]
-    [Migration("20210202150042_Initial")]
+    [Migration("20210203143426_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -198,7 +198,7 @@ namespace CourseManagement.Migrations
                     b.HasOne("CourseManagement.Models.Instructor", "Instructor")
                         .WithMany("CourseAssignments")
                         .HasForeignKey("InstructorID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Course");

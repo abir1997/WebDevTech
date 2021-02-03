@@ -1,9 +1,5 @@
 ﻿using CourseManagement.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CourseManagement.Data
 {
@@ -24,13 +20,13 @@ namespace CourseManagement.Data
         {
             base.OnModelCreating(builder);
 
-            // 1-* relationship
-            //builder.Entity<Course>()
-            //    .HasOne(c => c.Department)
-            //    .WithMany(d => d.Courses);
-
             // Composite key
             builder.Entity<CourseAssignment>().HasKey(c => new { c.CourseID, c.InstructorID });
+
+            builder.Entity<CourseAssignment>()
+                .HasOne(x => x.Instructor)
+                .WithMany(x => x.CourseAssignments)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

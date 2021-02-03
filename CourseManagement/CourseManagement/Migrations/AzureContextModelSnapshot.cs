@@ -196,7 +196,7 @@ namespace CourseManagement.Migrations
                     b.HasOne("CourseManagement.Models.Instructor", "Instructor")
                         .WithMany("CourseAssignments")
                         .HasForeignKey("InstructorID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Course");
