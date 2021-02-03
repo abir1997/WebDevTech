@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseManagement.Migrations
 {
     [DbContext(typeof(AzureContext))]
-    [Migration("20210203143426_Initial")]
-    partial class Initial
+    [Migration("20210203164238_Fresh")]
+    partial class Fresh
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,9 +24,7 @@ namespace CourseManagement.Migrations
             modelBuilder.Entity("CourseManagement.Models.Course", b =>
                 {
                     b.Property<int>("CourseID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
 
                     b.Property<int>("Credits")
                         .HasColumnType("int");
@@ -63,9 +61,7 @@ namespace CourseManagement.Migrations
             modelBuilder.Entity("CourseManagement.Models.Department", b =>
                 {
                     b.Property<int>("DepartmentID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Budget")
                         .HasColumnType("money");
@@ -115,9 +111,7 @@ namespace CourseManagement.Migrations
             modelBuilder.Entity("CourseManagement.Models.Instructor", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
 
                     b.Property<string>("FirstMidName")
                         .IsRequired()
@@ -154,9 +148,7 @@ namespace CourseManagement.Migrations
             modelBuilder.Entity("CourseManagement.Models.Student", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("EnrollmentDate")
                         .HasColumnType("datetime2");

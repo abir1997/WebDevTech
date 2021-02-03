@@ -20,6 +20,11 @@ namespace CourseManagement.Data
         {
             base.OnModelCreating(builder);
 
+            //builder.Entity<Course>()
+            //    .HasOne(c => c.Department)
+            //    .WithMany(d => d.Courses)
+            //    .HasForeignKey(d => d.DepartmentID);
+
             // Composite key
             builder.Entity<CourseAssignment>().HasKey(c => new { c.CourseID, c.InstructorID });
 

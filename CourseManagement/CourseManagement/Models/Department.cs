@@ -9,6 +9,7 @@ namespace CourseManagement.Models
 {
     public class Department
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int DepartmentID { get; set; }
 
         [StringLength(50, MinimumLength =7)]
