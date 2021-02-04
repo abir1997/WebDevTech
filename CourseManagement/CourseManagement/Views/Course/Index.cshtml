@@ -1,0 +1,31 @@
+﻿@model CourseManagement.ViewModels.CourseViewModel
+@{
+    ViewData["Title"] = "View courses";
+}
+
+<h1>Courses</h1>
+<div class="row">
+    <div class="col-md-4">
+        <table class="table">
+            <tr>
+                <th>@Html.DisplayNameFor(x => x.Courses.GetEnumerator().Current.CourseID)</th>
+                <th>@Html.DisplayNameFor(x => x.Courses.GetEnumerator().Current.Title)</th>
+                <th>@Html.DisplayNameFor(x => x.Courses.GetEnumerator().Current.Credits)</th>
+                <th>@Html.DisplayNameFor(x => x.Courses.GetEnumerator().Current.DepartmentID)</th>
+                <th></th>
+            </tr>
+
+            @foreach (var course in Model.Courses)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(x => course.CourseID)</td>
+                    <td>@Html.DisplayFor(x => course.Title)</td>
+                    <td>@Html.DisplayFor(x => course.Credits)</td>
+                    <td>@Html.DisplayFor(x => course.DepartmentID)</td>
+
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
