@@ -1,4 +1,7 @@
-﻿@model CourseManagement.ViewModels.CourseViewModel
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Core.Common
+@model CourseManagement.ViewModels.CourseViewModel
 @{
     ViewData["Title"] = "View courses";
 }
@@ -27,5 +30,12 @@
             }
 
         </table>
+
+        @Html.PagedListPager(Model.Courses, page => Url.Action("Index", new { page }),
+    new PagedListRenderOptions
+    {
+        LiElementClasses = new[] { "page-item" },
+        PageClasses = new[] { "page-link" }
+    })
     </div>
 </div>

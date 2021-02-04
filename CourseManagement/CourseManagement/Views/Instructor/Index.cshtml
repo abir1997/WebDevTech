@@ -1,1 +1,47 @@
-﻿@model CourseManagement.ViewModels.InstructorViewModel
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Core.Common
+@model CourseManagement.ViewModels.InstructorViewModel
+@{
+    ViewData["Title"] = "View instructors";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <table class="table">
+            <tr>
+                <th>@Html.DisplayNameFor(x => x.Instructors.GetEnumerator().Current.InstructorID)</th>
+                <th>@Html.DisplayNameFor(x => x.Instructors.GetEnumerator().Current.LastName)</th>
+                <th>@Html.DisplayNameFor(x => x.Instructors.GetEnumerator().Current.FirstMidName)</th>
+                <th>@Html.DisplayNameFor(x => x.Instructors.GetEnumerator().Current.HireDate)</th>
+                <th></th>
+            </tr>
+
+            @foreach (var instructor in Model.Instructors)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(x => instructor.InstructorID)</td>
+                    <td>@Html.DisplayFor(x => instructor.LastName)</td>
+                    <td>@Html.DisplayFor(x => instructor.FirstMidName)</td>
+                    <td>@Html.DisplayFor(x => instructor.HireDate)</td>
+
+                    <td>
+                        <a class="btn btn-primary"
+                           asp-controller="Course" asp-action="IndexToViewCourses" asp-route-InstructorID="@instructor.InstructorID">
+                            Select
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+        @Html.PagedListPager(Model.Instructors, page => Url.Action("Index", new { page }),
+            new PagedListRenderOptions
+            {
+                LiElementClasses = new[] { "page-item" },
+                PageClasses = new[] { "page-link" }
+            })
+
+    </div>
+</div>

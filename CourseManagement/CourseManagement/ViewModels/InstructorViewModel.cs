@@ -1,13 +1,10 @@
 ﻿using CourseManagement.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using X.PagedList;
 
 namespace CourseManagement.ViewModels
 {
     public class InstructorViewModel
     {
-        public ICollection<Instructor> Instructors { get; set; }
+        public IPagedList<Instructor> Instructors { get; set; }
     }
 }
