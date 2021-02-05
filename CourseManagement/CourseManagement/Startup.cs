@@ -1,3 +1,4 @@
+using CourseManagement.BackgroundServices;
 using CourseManagement.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +41,8 @@ namespace CourseManagement
             {
                 options.Cookie.IsEssential = true;
             });
+
+            services.AddHostedService<DisplayDataService>();
 
             services.AddControllersWithViews();
         }
