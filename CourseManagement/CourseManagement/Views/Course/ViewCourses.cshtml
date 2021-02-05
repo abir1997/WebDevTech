@@ -25,7 +25,12 @@
                     <td>@Html.DisplayFor(x => course.Title)</td>
                     <td>@Html.DisplayFor(x => course.Credits)</td>
                     <td>@Html.DisplayFor(x => course.DepartmentID)</td>
-
+                    <td>
+                        <a class="btn btn-primary"
+                           asp-controller="Student" asp-action="ViewStudents" asp-route-id="@course.CourseID">
+                            Select
+                        </a>
+                    </td>
                 </tr>
             }
 

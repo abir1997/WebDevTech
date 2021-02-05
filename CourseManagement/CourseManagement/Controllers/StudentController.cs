@@ -1,4 +1,5 @@
 ﻿using CourseManagement.Data;
+using CourseManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,13 +24,32 @@ namespace CourseManagement.Controllers
             return View(students);
         }
 
-        //public async Task<IActionResult> ViewStudents(int courseID)
-        //{
-        //    var course = await _context.Courses.FindAsync(courseID);
-        //    if(course is null)
-        //    {
-        //        return NotFound();
-        //    }
-        //}
+        public async Task<IActionResult> ViewStudents(int courseID)
+        {
+            var course = await _context.Courses.FindAsync(courseID);
+            if (course is null)
+            {
+                return NotFound();
+            }
+            var enrollments = course.Enrollments;
+            var studentIds = new List<int>();
+            foreach(var enrollment in enrollments)
+            {
+                studentIds.Add(enrollment.StudentID);
+            }
+
+            var students = await _context.Students.ToListAsync();
+            var filteredStudents = new List<Student>();
+            foreach(var student in students)
+            {
+                if(student != null && studentIds.Contains(student.StudentID))
+                {
+                    filteredStudents.Add(student);
+                }
+            }
+
+            return View(filteredStudents);
+
+        }
     }
 }
