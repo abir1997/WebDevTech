@@ -30,6 +30,10 @@
                            asp-controller="Course" asp-action="IndexToViewCourses" asp-route-InstructorID="@instructor.InstructorID">
                             Select
                         </a>
+                        <a class="btn btn-primary"
+                           asp-controller="Instructor" asp-action="Edit" asp-route-id="@instructor.InstructorID">
+                            Edit
+                        </a>
                     </td>
                 </tr>
             }
