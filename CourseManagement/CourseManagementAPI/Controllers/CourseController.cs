@@ -32,6 +32,17 @@ namespace CourseManagementAPI.Controllers
             return courses;
         }
 
+        [HttpGet("{id}")]
+        public async Task<Course> GetAsync(int id)
+        {
+            var course = await _context.Courses.FindAsync(id);
+            if(course is null)
+            {
+                _logger.LogError("Cannot find course with " + id);
+            }
+            return course;
+        }
+
         [HttpPut]
         public async Task PutAsync(Course course)
         {

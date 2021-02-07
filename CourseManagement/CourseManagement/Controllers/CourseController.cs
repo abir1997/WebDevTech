@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using X.PagedList;
 
@@ -31,7 +33,7 @@ namespace CourseManagement.Controllers
         public async Task<IActionResult> Index()
         {
             //var courses = await _context.Courses.ToListAsync().ConfigureAwait(false);
-            var response = await Client.GetAsync("api/course");
+            var response = await Client.GetAsync(Prefix);
             if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError($"Unable to get any courses.");
@@ -102,7 +104,14 @@ namespace CourseManagement.Controllers
             if (id == null)
                 return NotFound();
 
-            var course = await _context.Courses.FindAsync(id);
+            var response = await Client.GetAsync($"{Prefix}/{id}");
+            if (!response.IsSuccessStatusCode)
+                throw new Exception();
+
+            var result = await response.Content.ReadAsStringAsync();
+            var course = JsonConvert.DeserializeObject<Course>(result);
+
+
             if (course == null)
                 return NotFound();
 
@@ -111,7 +120,7 @@ namespace CourseManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CourseID, Title, Credits, DepartmentID")] Course course)
+        public async Task<IActionResult> Edit(int id, Course course)
         {
             if(id != course.CourseID)
             {
@@ -120,20 +129,10 @@ namespace CourseManagement.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(course);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if(!_context.Courses.Any(x => x.CourseID == id))
-                    {
-                        return NotFound();
-                    }
-                    throw;
-                }
-                return RedirectToAction(nameof(Index));
+                var content = new StringContent(JsonConvert.SerializeObject(course), Encoding.UTF8, "application/json");
+                var response = await Client.PutAsync($"{Prefix}", content);
+                if (response.IsSuccessStatusCode)
+                    return RedirectToAction("Index");
             }
             return View(course);
         }
