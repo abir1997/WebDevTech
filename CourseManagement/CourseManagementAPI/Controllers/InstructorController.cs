@@ -24,9 +24,27 @@ namespace CourseManagementAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Instructor> GetAll()
+        public async Task<IEnumerable<Instructor>> GetAllAsync()
         {
-            return _context.Instructors.ToList();
+            var instructors = await _context.Instructors
+                .Include(i => i.CourseAssignments)
+                .ThenInclude(c => c.Course)
+                .ToListAsync().ConfigureAwait(false);
+
+            if(instructors == null || instructors.Count == 0)
+            {
+                _logger.LogError("No data available for instructors");
+            }
+
+            return instructors;
+        }
+
+
+        [HttpPut]
+        public async Task PutAsync(Instructor instructor)
+        {
+            _context.Update(instructor);
+            await _context.SaveChangesAsync();
         }
     }
 }
