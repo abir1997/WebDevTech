@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace CourseManagement
@@ -40,6 +41,14 @@ namespace CourseManagement
             services.AddSession(options =>
             {
                 options.Cookie.IsEssential = true;
+            });
+
+
+            // Configure api client.
+            services.AddHttpClient("api", client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5011");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             });
 
             services.AddHostedService<DisplayDataService>();

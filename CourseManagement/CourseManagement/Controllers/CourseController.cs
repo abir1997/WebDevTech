@@ -4,9 +4,11 @@ using CourseManagement.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using X.PagedList;
 
@@ -16,15 +18,27 @@ namespace CourseManagement.Controllers
     {
         private readonly AzureContext _context;
         private const string InstructorSessionKey = "_InstructorSessionKey";
-
-        public CourseController(AzureContext context)
+        private readonly IHttpClientFactory _clientFactory;
+        private readonly ILogger<CourseController> _logger;
+        private HttpClient Client => _clientFactory.CreateClient("api");
+        private const string Prefix = "api/course";
+        public CourseController(IHttpClientFactory clientFactory, ILogger<CourseController> logger)
         {
-            _context = context;
+            _clientFactory = clientFactory;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
         {
-            var courses = await _context.Courses.ToListAsync().ConfigureAwait(false);
+            //var courses = await _context.Courses.ToListAsync().ConfigureAwait(false);
+            var response = await Client.GetAsync("api/course");
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError($"Unable to get any courses.");
+            }
+            var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var courses = JsonConvert.DeserializeObject<List<Course>>(result);
+
             return View(new CourseViewModel
             {
                 Courses = await courses.ToPagedListAsync(1, 4).ConfigureAwait(false)
